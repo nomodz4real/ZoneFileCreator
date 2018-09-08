@@ -1,0 +1,10 @@
+1. Rewrite the main function so that elements can be extracted and configured as separate functions, allowing for more 
+   flexibility with what the script can do.
+
+2. Provide the user the opportunity to confirm forward and reverse dns entries before submitting them.
+
+3. Allow for premade zone files to be added to a target directory(or current directory) and an appropriate zone entry be added.
+
+4. Error handling for user entries so that they cannot abuse the bash calls or the script itself.
+
+5. Rewrite the bash calls so that that error conditions are handled more gracefully.
