@@ -19,7 +19,7 @@ def BANNER():
             *                          if needed                           *
             ****************************************************************"""
 
-# this code was made by pootzko thank you dude!
+# this code(lines 22-44) was made by pootzko thank you dude!
 # heavily modified to only generate /24 addresses ie stop at the third octet
 # and accepts start ip and number of subnets as opposed to start and end IP
 def RANGEMAKER(IPSTART,SUBNETS):
