@@ -48,42 +48,33 @@ def RANGEMAKER(IPSTART,SUBNETS):
 def DEFAULTER(DEFAULTVALUE,QUERY):
   ENTEREDVALUE = raw_input(str(QUERY))
   if ENTEREDVALUE.strip() == '':
-     return DEFAULTVALUE
+    return DEFAULTVALUE
   elif ENTEREDVALUE == DEFAULTVALUE:
-     return DEFAULTVALUE
-  else :   return ENTEREDVALUE.lower()
+    return DEFAULTVALUE
+  else :
+    return ENTEREDVALUE.lower()
 
 # separates subnet and netmask, whether its cidr or dot notation
 # if the mask section is less than 3 characters ie a 23 or 24 etc
 # passes the value as an int if not returns the str instead so when this
 # is passed to the netmaskgen function it can translate the cidr value or
-# leave it as is
-def IPCUTTER(IPBASE):
- SLASH = "/"
- for i in range(len(IPBASE)):
-    if IPBASE[i] == SLASH:
-       IPCUT = IPBASE.split("/")
-       break
-    else:
-       IPCUT = IPBASE.split(" ")
- if len(IPCUT[1]) < 3:
-  CUTCIDR = int(IPCUT[1])
- else:
-  CUTCIDR = str(IPCUT[1])
- return CUTCIDR
-
-# same as ipcutter but to return the IP address 
-# instead of netmask/cidr
-def IPGETTER(IPBASE):
-  SLASH = "/"
+# leave it as is, will also return the IP addres given the right flag. 0 
+# returns the netmask and 1 returns the IP address
+def IPCUTTER(IPBASE,IPMASK):
   for i in range(len(IPBASE)):
-    if IPBASE[i] == SLASH:
+    if IPBASE[i] == "/":
       IPCUT = IPBASE.split("/")
       break
     else:
       IPCUT = IPBASE.split(" ")
-  CUTIP = str(IPCUT[0])
-  return CUTIP
+  if IPMASK == 0:
+    CUTCIDR = str(IPCUT[0])
+  elif IPMASK == 1:
+    if len(IPCUT[1]) < 3:
+      CUTCIDR = int(IPCUT[1])
+    else:
+      CUTCIDR = str(IPCUT[1])
+  return CUTCIDR
 
 # generates the netmasks for /8-/31 in order to translate CIDR into netmask
 # with the intention to pass to a different function to gen range based on
@@ -311,8 +302,8 @@ while yes != "yes":
   break
  elif DIRECTION == "reverse":
   FULLSUBNET = DEFAULTER("10.0.0.0/24","\nEnter IP NETMASK(MAX is a 255.255.224.0) or IP/CIDRVALUE(MAX is a /19)\nfor example: 192.168.1.0 255.255.255.0 or 192.168.1.0/24(default is 10.0.0.0/24): ")
-  MASK = MASKCOMPARE(IPCUTTER(FULLSUBNET))
-  IP = IPGETTER(FULLSUBNET)
+  MASK = MASKCOMPARE(IPCUTTER(FULLSUBNET,0))
+  IP = IPCUTTER(FULLSUBNET,1)
   if len(str(MASK)) < 3:
     print "\nTry again knucklehead, this script will only let you break things so much.\n"
   else:
